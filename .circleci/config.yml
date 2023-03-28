@@ -32,7 +32,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - '5d:00:2d:b4:a2:7b:21:1c:61:86:ea:ac:1c:f2:21:db'
+            - 'e2:78:57:63:00:47:f5:bb:ca:8c:6f:3b:6d:70:ea:a4'
       - checkout
       - attach_workspace:
           at: ~/myapp
