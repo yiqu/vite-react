@@ -1,12 +1,15 @@
 {
-  "name": "vreact",
-  "private": true,
-  "version": "0.0.0",
+  "name": "vite-react",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "build-gh": "tsc && vite build --base=/vite-react/",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build --base=/vite-react/",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "react": "^18.2.0",
