@@ -14,6 +14,8 @@ import { useLocalStorage } from 'react-use';
 import { startCase } from 'lodash';
 import ThemeContext from "../../theme/ThemeContext";
 import { LS_APP_THEME, TransformPageTitle } from "../../shared/utils/constants";
+import Account from "./Account";
+
 
 export interface TopNavProps {
   open: boolean;
@@ -44,8 +46,10 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
     setLocalStorageTheme(themeToSet);
   };
 
+
+
   return (
-    <React.Fragment>
+    <>
       <AppBar position="fixed" open={ open } elevation={ 1 }>
         <Toolbar>
           <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
@@ -69,12 +73,15 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
               </Link>
             </Stack>
 
-            <Tooltip title={ `Turn ${themeContext.currentTheme==='light'?'off':'on'} the lights` }>
-              <IconButton sx={ { ml: 1 } } color="inherit" onClick={ toggleThemeHandler }>
-                { themeContext.currentTheme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon /> }
-              </IconButton>
-            </Tooltip>
-
+            <Stack direction="row">
+              <Tooltip title={ `Turn ${themeContext.currentTheme==='light'?'off':'on'} the lights` }>
+                <IconButton sx={ { ml: 1 } } color="inherit" onClick={ toggleThemeHandler }>
+                  { themeContext.currentTheme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon /> }
+                </IconButton>
+              </Tooltip>
+              
+              <Account />
+            </Stack>
           </Stack>
         </Toolbar>
 
@@ -89,6 +96,6 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
         </AppBar> */}
           
       </AppBar>
-    </React.Fragment>
+    </>
   );
 };

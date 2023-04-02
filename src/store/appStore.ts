@@ -1,16 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query/react';
 import authSliceReducer from './auth/auth.reducer';
+import pokemonApiReducer from '../core/store/pokeapi/pokeapi.reducer';
+import { pokemonApi } from '../core/store/pokeapi/pokeapi';
 
 export const appStore = configureStore({
   reducer: {
-    auth: authSliceReducer
+    auth: authSliceReducer,
+    pokemonApiConfig: pokemonApiReducer,
+    [pokemonApi.reducerPath]: pokemonApi.reducer
   },
 
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat();
+    return getDefaultMiddleware().concat(pokemonApi.middleware);
   },
   
   devTools: {

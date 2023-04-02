@@ -36,7 +36,7 @@ function LeftNav (props: LeftNavProps) {
         { leftNavItems.map((navItem, index) => (
           <React.Fragment key={ navItem.id }>
             {
-              (navItem.id === 'about' || navItem.id === 'personal-films') && <Divider sx={ {my: 1} } />
+              (navItem.id === 'about') && <Divider sx={ {my: 1} } />
             }
 
             <ListItem key={ navItem.id } disablePadding sx={ { display: 'block' } }>
@@ -62,6 +62,7 @@ function LeftNav (props: LeftNavProps) {
                 <ListItemText primary={ navItem.display } sx={ { opacity: props.open ? 1 : 0 } } />
               </ListItemButton>
             </ListItem>
+            
           </React.Fragment>
           )) }
       </List>
