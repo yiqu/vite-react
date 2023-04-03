@@ -6,7 +6,8 @@ import { POKEAPI_BASE_URL, pokemonApi } from './pokeapi';
 const initialState: PokeApiState = {
   nextUrl: `${POKEAPI_BASE_URL}?offset=0&limit=20`,
   previousUrl: null,
-  fetchUrl: `${POKEAPI_BASE_URL}?offset=0&limit=20`
+  fetchUrl: `${POKEAPI_BASE_URL}?offset=0&limit=20`,
+  total: 0
 };
 
 const pokemonApiSlice = createSlice({
@@ -22,6 +23,7 @@ const pokemonApiSlice = createSlice({
       const payload = action.payload;
       state.nextUrl = payload.next;
       state.previousUrl = payload.previous;
+      state.total = payload.count;
     });
   }
 });

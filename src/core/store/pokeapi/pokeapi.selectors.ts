@@ -25,3 +25,11 @@ export const getPokemonApiFetchUrl = createDraftSafeSelector(
     return state.fetchUrl;
   }
 );
+
+export const getCountInformation = createDraftSafeSelector(
+  pokemonApiConfigSlice,
+  (state): number | undefined => {
+    const total = state.total;
+    return total;
+  }
+);

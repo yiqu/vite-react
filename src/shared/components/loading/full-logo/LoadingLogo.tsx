@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import classes from './LoadingLogo.module.scss';
-import logo from '/death-star.png';
+import logo from '/meowth.png';
 
 export interface LoadingLogoProps {
   message: string;

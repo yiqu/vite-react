@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import leftNavLogo from '/death-star.png';
+import leftNavLogo from '/pikachu.png';
 import { DrawerHeader } from '../layouts//layout-components';
 import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';

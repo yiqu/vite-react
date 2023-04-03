@@ -1,27 +1,24 @@
-import { Stack, Skeleton } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-
+import { flexCenter } from '../../utils/css.utils';
 export interface LoadingSkeletonProps {
-  loading?: boolean;
-  children: any;
+  count?: number;
+  sxProps?: any;
 }
 
-export default function LoadingSkeleton(props: LoadingSkeletonProps) {
-
-  if (props.loading) return (
-    <Grid xs={ 12 } sm={ 12 } >
-      <Stack direction="row" sx={ { display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%'} }>
-        <Skeleton variant='text' sx={ { fontSize: '2rem', width: '10rem'} } />
-        <Skeleton variant='circular' width={ 40 } height={ 40 } />
-      </Stack>
-
-      <Skeleton variant='rectangular' height="30rem" />
-    </Grid>
-  );
+export default function LoadingBarSkeleton({ count = 1, sxProps = {} }: LoadingSkeletonProps) {
 
   return (
     <>
-      {props.children}
+      {
+        Array.from(Array(count).keys()).map((res) => {
+          return (
+            <Grid xs={ 12 } key={ res } sx={ {...sxProps, ...flexCenter} }>
+              <Skeleton variant='text' width="100%" />
+            </Grid>
+          );
+        })
+      }
     </>
   );
 }

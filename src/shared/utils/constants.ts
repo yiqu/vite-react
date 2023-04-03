@@ -3,5 +3,5 @@ export const LS_APP_THEME = 'app-theme';
 export const TransformPageTitle: {[key: string]: string} = {
   home: 'Home Page',
   about: 'About',
-  text: 'Long Text'
+  pokemons: 'Pokemon List'
 };

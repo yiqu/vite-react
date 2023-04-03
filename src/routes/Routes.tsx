@@ -8,7 +8,7 @@ import Layout from './Layout';
 const NotFoundLazy = loadable(() => import('../404/NotFound'));
 const HomeLayout = loadable(() => import('../core/home/Home'));
 const About = loadable(() => import('../core/about/About'));
-const Text = loadable(() => import('../core/text/Text'));
+const PokemonInfinityScroll = loadable(() => import('../core/pokemons/Pokemons'));
 
 const routeList: Router = createBrowserRouter([
   {
@@ -28,8 +28,8 @@ const routeList: Router = createBrowserRouter([
         element: <About />
       },
       {
-        path: 'text',
-        element: <Text />
+        path: 'pokemons',
+        element: <PokemonInfinityScroll />
       },
     ]
   }

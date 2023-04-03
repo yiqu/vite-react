@@ -14,4 +14,5 @@ export interface PokeApiState {
   nextUrl: string | null;
   previousUrl: string | null;
   fetchUrl: string | null;
+  total?: number;
 }
