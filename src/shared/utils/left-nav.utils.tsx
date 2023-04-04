@@ -16,6 +16,9 @@ export const GET_LEFT_NAV_ITEMS = () => {
     new NavigationItem('Home', 'home', ['/', 'home'], <RocketIconOutlined color='primary' />),
     new NavigationItem('Pokemons', 'pokemons', ['/', 'pokemons'], <CatchingPokemonIcon color='primary' />),
     new NavigationItem('About', 'about', ['/', 'about'], <InfoIconOutlined color='primary' />),
+    ...Array.from(Array(40).keys()).map((res) => {
+      return new NavigationItem(`${res}`, `${res}`, ['/', `${res}`], <InfoIconOutlined color='primary' />);
+    })
   ];
   return LEFT_NAV_ITEMS;
 };

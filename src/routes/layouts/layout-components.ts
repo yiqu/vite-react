@@ -2,7 +2,7 @@ import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 
-const drawerWidth = 190;
+const drawerWidth = 220;
 
 export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -11,6 +11,12 @@ export const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
+  borderRight: theme.palette.mode === 'light' ? '1px solid #2b2b2b4a' : '1px solid #3c3c3c',
+  justifyContent: 'space-between',
+  // overflow: 'hidden',
+  // "&:hover": {
+  //   overflow: 'auto'
+  // }
 });
 
 export const closedMixin = (theme: Theme): CSSObject => ({
@@ -30,6 +36,7 @@ export const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '0px 10px 0px 22px',
+  backgroundColor: theme.palette.mode === 'light' ? theme.palette.primary.main : 'null',
   ...theme.mixins.toolbar,
 }));
 

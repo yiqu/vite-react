@@ -16,6 +16,8 @@ import LeftNav from './left-nav/LeftNav';
 import LeftNavHeader from './left-nav/LeftNavHeader';
 import { getMyTheme } from '../theme/AppTheme';
 import { GREY } from '../theme/palette';
+import { Stack, Typography } from '@mui/material';
+import styles from './Layout.module.scss';
 
 const Layout = () => {
   
@@ -51,11 +53,20 @@ const Layout = () => {
 
         <Drawer variant="permanent" open={ open }>
 
-          <LeftNavHeader closeDrawerHandler={ handleDrawerClose } />
-
-          <Divider />
-        
-          <LeftNav open={ open } />
+          <Box className={ open ? styles['drawer-content-open'] : styles['drawer-content-close'] }>
+            <LeftNavHeader closeDrawerHandler={ handleDrawerClose } />
+            <Divider />
+            <LeftNav open={ open } />
+          </Box>
+          
+          {
+            open && <Box sx={ {bgcolor: (theme) => theme.palette.mode === 'light' ? 'primary.main' : null, color: '#fff'} }>
+              <Stack direction="row" height="2rem" justifyContent="space-between" alignItems="center" px={ 2 }>
+                <Typography variant="body1">{ `v. ${import.meta.env.VITE_APP_VERSION}` }</Typography>
+                <Typography variant="body1"> { import.meta.env.VITE_APP_TITLE } © 2023 </Typography>
+              </Stack>
+            </Box>
+          }
 
         </Drawer>
 

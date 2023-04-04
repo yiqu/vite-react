@@ -1,0 +1,17 @@
+.drawer-content-open {
+  overflow: hidden;
+  height: calc(100% - 3rem);
+}
+
+.drawer-content-close {
+  overflow: hidden;
+  height: 100%;
+}
+
+.drawer-content-open:hover {
+  overflow-y: scroll;
+}
+
+.drawer-content-close:hover {
+  overflow-y: scroll;
+}

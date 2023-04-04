@@ -50,8 +50,8 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
 
   return (
     <>
-      <AppBar position="fixed" open={ open } elevation={ 1 }>
-        <Toolbar>
+      <AppBar position="fixed" open={ open } elevation={ 0 }>
+        <Toolbar sx={ {borderBottom: '1px solid #3c3c3c'} }>
           <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
             <Stack direction="row" justifyContent="start" alignItems="center">
               <IconButton

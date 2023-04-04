@@ -11,13 +11,14 @@ import { Link, useLocation, useNavigation } from 'react-router-dom';
 import { Stack } from '@mui/material';
 import { flexCenter } from '../../shared/utils/css.utils';
 
+
 export interface LeftNavHeaderProps {
   closeDrawerHandler: (openState: boolean) => void;
 }
 
 function LeftNavHeader({ closeDrawerHandler }: LeftNavHeaderProps) {
 
-  const leftNavTitle = 'Vite React';
+  const leftNavTitle = import.meta.env.VITE_APP_TITLE;
   const theme = useTheme();
   const location = useLocation();
   const navigation = useNavigation();
@@ -38,13 +39,13 @@ function LeftNavHeader({ closeDrawerHandler }: LeftNavHeaderProps) {
         <Stack direction="row" sx={ {...flexCenter} }>
           <Typography component="img" src={ displayLogo } sx={ {height: '2rem', mr: '10px'} } alt="logo"></Typography>
           <Typography variant='h6' 
-            sx={ {color: (theme) => theme.palette.mode === 'light' ? '#000' : '#fff'} }>
+            sx={ {color: (theme) => theme.palette.mode === 'light' ? '#fff' : '#fff'} }>
             { leftNavTitle }
           </Typography>
         </Stack>
       </Link>
         
-      <IconButton onClick={ handleDrawerClose }>
+      <IconButton onClick={ handleDrawerClose } sx={ {color: '#fff'} }>
         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
       </IconButton>
     </DrawerHeader>
