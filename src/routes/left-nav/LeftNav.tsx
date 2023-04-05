@@ -7,7 +7,7 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import { NavLink, useLocation } from 'react-router-dom';
 import { getFilledIcon, GET_LEFT_NAV_ITEMS } from "../../shared/utils/left-nav.utils";
-import styles from './LeftNav.module.scss';
+import './LeftNav.module.scss';
 
 export interface LeftNavProps {
   open: boolean;
@@ -33,11 +33,11 @@ function LeftNav (props: LeftNavProps) {
 
   return (
     <React.Fragment>
-      <List sx={ {p: 0, display: 'flex', flexDirection: 'column'} } className={ styles['side-nav-list'] }>
+      <List sx={ {p: 0, display: 'flex', flexDirection: 'column', gap: '5px'} } >
         { leftNavItems.map((navItem, index) => (
           <React.Fragment key={ navItem.id }>
             {
-              (navItem.id === 'about') && <Divider sx={ {my: 1} } />
+              (navItem.id === 'about') && <Divider />
             }
 
             <ListItem key={ navItem.id } disablePadding sx={ { display: 'block' } }>

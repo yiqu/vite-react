@@ -9,13 +9,16 @@ export const MyComponents: Components<Omit<Theme, "components">> | undefined = {
   MuiListItemButton: {
     defaultProps: {
       disableRipple: true
+    },
+    styleOverrides: {
+      root: {
+        "&.Mui-selected .MuiListItemText-root .MuiListItemText-primary": {
+          fontWeight: 700
+        }
+      }
     }
   },
   MuiListItemText: {
-    styleOverrides: {
-      primary: {
-      }
-    },
     defaultProps: {
       primaryTypographyProps: {
         style: {

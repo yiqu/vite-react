@@ -1,19 +1,20 @@
 import { createApi, fetchBaseQuery, TagDescription } from '@reduxjs/toolkit/query/react';
 // eslint-disable-next-line unused-imports/no-unused-imports
 import urlcat from "urlcat";
-import { HttpResponse, PokemonEntity } from './pokeapi.state';
+import { HttpResponse, PokemonDetail, PokemonEntity } from './pokeapi.state';
 
 export const POKEAPI_BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 export const COUNT_LIMIT = 20;
 
-const pokemonsTag = 'pokemons';
+export const pokemonsTag = 'pokemons';
+export const pokemonDetailTag = 'pokemon';
 
 export const pokemonApi = createApi({
   reducerPath: 'pokeapi',
   baseQuery: fetchBaseQuery({
     baseUrl: POKEAPI_BASE_URL
   }),
-  tagTypes: [pokemonsTag],
+  tagTypes: [pokemonsTag, pokemonDetailTag],
   endpoints: (builder) => ({
     fetchPokemons: builder.query<HttpResponse<PokemonEntity>, string | null>({
       query: (nextUrl: string | null) => {
@@ -44,8 +45,21 @@ export const pokemonApi = createApi({
       }
     }),
 
+    fetchPokemonDetail: builder.query<PokemonDetail, string | null>({
+      query: (pokemonDetailUrl: string | null) => {
+        return {
+          url: `${pokemonDetailUrl}`,
+          params: undefined,
+          method: 'GET'
+        };
+      },
+      providesTags: (result: PokemonDetail | undefined, error, args, meta) => {
+        return [{ type: pokemonDetailTag, id: result?.id }];
+      }
+    }),
+
   })
 });
 
 
-export const { useFetchPokemonsQuery } = pokemonApi;
+export const { useFetchPokemonsQuery, useFetchPokemonDetailQuery } = pokemonApi;

@@ -16,3 +16,21 @@ export interface PokeApiState {
   fetchUrl: string | null;
   total?: number;
 }
+
+export interface PokemonDetail {
+  id: string;
+  name: string;
+  is_default: boolean;
+  height: number;
+  weight: number;
+  sprites: PokemonSprites;
+  species: PokemonEntity;
+  location_area_encounters: string;
+}
+
+export interface PokemonSprites {
+  front_default: string;
+  back_default: string;
+  front_shiny: string;
+  back_shiny: string;
+}
