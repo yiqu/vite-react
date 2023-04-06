@@ -10,7 +10,8 @@ import { useLocation, useParams } from "react-router-dom";
 import { pokemonApi, pokemonDetailTag, useFetchPokemonDetailQuery } from "../store/pokeapi/pokeapi";
 import { skipToken } from "@reduxjs/toolkit/dist/query/react";
 import ErrorPage from "../../404/ErrorPage";
-
+import LoadingBlockSkeleton from "../../shared/components/skeleton/LoadingSkeleton";
+import { flexCenter } from "../../shared/utils/css.utils";
 
 function Pokemon() {
 
@@ -21,16 +22,17 @@ function Pokemon() {
   const { state: { pokemonDetailUrl } } = location;
   const { data, isFetching, isLoading, error, isError } = useFetchPokemonDetailQuery(pokemonDetailUrl ?? skipToken);
 
-console.log(data);
 
   const handlePokemonRefresh = () => {
     dispatch(pokemonApi.util.invalidateTags([{type: pokemonDetailTag, id: data?.id}]));
   };
 
   if (isLoading) return (
-    <Stack direction="column" width="100%" justifyContent="center" alignItems="center" height="100vh">
-      <>Loading</>
-    </Stack>
+    <Box mt={ 2 } mx={ isMobile ? 2 : 0 } sx={ {width: '100%'} }>
+      <LayoutWithGutter size={ 'skinny' }>
+        <LoadingBlockSkeleton count={ 1 } />
+      </LayoutWithGutter>
+    </Box>
   );
 
   if (isError) {
@@ -69,7 +71,9 @@ console.log(data);
           <Card sx={ { width: '100%' } }>
             <CardHeader
               avatar={
-                <></>
+                <div style={ { width: 70, height: 70, ...flexCenter } }>
+                  <img src={ data.sprites.front_default } style={ {height: '100%', width: '100%'} } alt="avatar" />
+                </div>
               }
               action={
                 <IconButton aria-label="settings">

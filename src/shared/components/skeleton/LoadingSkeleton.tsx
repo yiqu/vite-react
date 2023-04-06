@@ -3,33 +3,26 @@ import Stack from '@mui/material/Stack';
 import { times } from 'lodash';
 import Grid from '@mui/material/Unstable_Grid2';
 
-const LoadingSkeleton = ({ count }: { count: number }) => {
+const LoadingBlockSkeleton = ({ count, sxProps }: { count: number, sxProps?: any }) => {
 
   return (
-    <Grid direction="column" padding={ 2 } xs={ 12 }>
+    <>
+      {
+        times(count, (index) => {
+          return (
+            <Grid key={ index } xs={ 12 } sm={ 12 } sx={ {...sxProps} } >
+              <Stack direction="row" sx={ { display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%'} }>
+                <Skeleton variant='circular' width={ 42 } height={ 40 } />
+                <Skeleton variant='text' sx={ { fontSize: '2rem', width: '100%', ml: 1} } />
+              </Stack>
 
-      <Grid xs={ 12 } md={ 6 }>
-        <Skeleton variant='text' sx={ {fontSize: '2rem'} }></Skeleton>
-      </Grid>
-
-      <Grid container spacing={ 2 }>
-        {
-          times(count, (index) => {
-            return (
-              <Grid key={ index } xs={ 12 } sm={ 12 } md >
-                <Stack direction="row" sx={ { display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%'} }>
-                  <Skeleton variant='text' sx={ { fontSize: '2rem', width: '10rem'} } />
-                  <Skeleton variant='circular' width={ 40 } height={ 40 } />
-                </Stack>
-
-                <Skeleton variant='rectangular' height="30rem" />
-              </Grid>
-            );
-          })
-        }
-      </Grid>
-    </Grid>
-  );
+              <Skeleton variant='rectangular' height="20rem" />
+            </Grid>
+          );
+        })
+      }
+    </>
+  ); 
 };
 
-export default LoadingSkeleton;
+export default LoadingBlockSkeleton;

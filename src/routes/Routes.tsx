@@ -34,9 +34,8 @@ const routeList: Router = createBrowserRouter([
         path: 'pokemons',
         element: <PokemonLayout />,
         children: [
-          { index: true, element: <Navigate replace to="all" /> },
           {
-            path: 'all',
+            index: true,
             element: <PokemonInfinityScroll />
           },
           {

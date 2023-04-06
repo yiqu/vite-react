@@ -89,7 +89,7 @@ function PokemonInfinityScroll() {
                   <Grid key={ display.name } xs={ 12 }>
                     {
                       <Box sx={ {py: 2, ...flexCenter, width: '100%'} }>
-                        <Button component={ Link } to={ `../${display.name}` } state={ {pokemonDetailUrl: display.url } }> { display.name } </Button>
+                        <Button component={ Link } to={ `./${display.name}` } state={ {pokemonDetailUrl: display.url } }> { display.name } </Button>
                       </Box>
                     }
                   </Grid>
