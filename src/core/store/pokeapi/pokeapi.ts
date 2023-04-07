@@ -58,8 +58,23 @@ export const pokemonApi = createApi({
       }
     }),
 
+    editPokemonDetail: builder.mutation({
+      query: (pokemonDetail: PokemonDetail) => {
+        return {
+          url: `${POKEAPI_BASE_URL}${pokemonDetail.id}`,
+          method: 'PUT',
+          body: {
+            ...pokemonDetail
+          }
+        };
+      },
+      invalidatesTags: (result, error, args, meta) => {
+        return [{type: pokemonDetailTag, id: args.id}];
+      },
+    })
+
   })
 });
 
 
-export const { useFetchPokemonsQuery, useFetchPokemonDetailQuery } = pokemonApi;
+export const { useFetchPokemonsQuery, useFetchPokemonDetailQuery, useEditPokemonDetailMutation } = pokemonApi;

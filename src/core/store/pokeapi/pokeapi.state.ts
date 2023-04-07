@@ -19,6 +19,7 @@ export interface PokeApiState {
 
 export interface PokemonDetail {
   id: string;
+  order: number;
   name: string;
   is_default: boolean;
   height: number;
