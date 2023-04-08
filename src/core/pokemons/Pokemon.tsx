@@ -17,14 +17,15 @@ import { startCase } from 'lodash';
 import { useEffect, useState } from "react";
 import { toast } from 'sonner';
 
+const pokeUrl = 'https://pokeapi.co/api/v2/pokemon';
 
 function Pokemon() {
 
   const { isMobile } = useScreenSize();
   const dispatch = useAppDispatch();
-  const { pokemonName } = useParams();
+  const { pokemonId } = useParams();
   const location = useLocation();
-  const { state: { pokemonDetailUrl } } = location;
+  const pokemonDetailUrl = pokemonId ? `${pokeUrl}/${pokemonId}` : undefined;
   const { data, isFetching, isLoading, error, isError } = useFetchPokemonDetailQuery(pokemonDetailUrl ?? skipToken);
   const [ editPokemonDetail, editPokemonDetailResult ] = useEditPokemonDetailMutation();
   const [cardMenuanchorEl, setCardMenuanchorEl] = useState<null | HTMLElement>(null);

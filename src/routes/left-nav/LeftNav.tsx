@@ -17,7 +17,7 @@ function LeftNav (props: LeftNavProps) {
 
   const location = useLocation();
 
-  const [leftNavItems, setLeftNavItems] = useState(GET_LEFT_NAV_ITEMS());
+  const [leftNavItems, setLeftNavItems] = useState(GET_LEFT_NAV_ITEMS);
 
   useEffect(() => {
     const currentMainPath = location.pathname.split("/")[1];

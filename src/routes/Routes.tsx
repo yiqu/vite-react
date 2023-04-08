@@ -11,7 +11,7 @@ const HomeLayout = loadable(() => import('../core/home/Home'));
 const About = loadable(() => import('../core/about/About'));
 const PokemonInfinityScroll = loadable(() => import('../core/pokemons/Pokemons'));
 const PokemonDetail = loadable(() => import('../core/pokemons/Pokemon'));
-
+const GameVersions = loadable(() => import('../core/game-versions/GameVersions'));
 
 const routeList: Router = createBrowserRouter([
   {
@@ -43,6 +43,10 @@ const routeList: Router = createBrowserRouter([
             element: <PokemonDetail />
           },
         ]
+      },
+      {
+        path: 'game-versions',
+        element: <GameVersions />
       },
     ]
   }

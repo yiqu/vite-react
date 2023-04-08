@@ -9,15 +9,10 @@ import Grid from '@mui/material/Unstable_Grid2';
 import LayoutWithGutter from "../../shared/components/layouts/LayoutWithGutter";
 import LoadingLogo from "../../shared/components/loading/full-logo/LoadingLogo";
 import ErrorPage from "../../404/ErrorPage";
-import { PokemonEntity } from "../store/pokeapi/pokeapi.state";
-import { flexCenter } from "../../shared/utils/css.utils";
 import { setFetchPageUrl } from "../store/pokeapi/pokeapi.reducer";
-import InfiniteScroll from 'react-infinite-scroll-component';
-import LoadingSkeleton from "../../shared/components/loading/LoadingSkeleton";
-import { Link } from "react-router-dom";
 
 
-function PokemonInfinityScroll() {
+function GameVersions() {
 
   const { isMobile } = useScreenSize();
   const dispatch = useAppDispatch();
@@ -26,18 +21,14 @@ function PokemonInfinityScroll() {
   const totalCount: number | undefined = useAppSelector(getCountInformation);
   const { data, isFetching, isLoading, error, isError } = useFetchPokemonsQuery(fetchPageURl ?? skipToken);
 
-  const nextPageAddHandler = () => {
+  const handleRefresh = () => {
     dispatch(setFetchPageUrl(nextPageUrl));
   };
 
-  const extractId = (pokemonUrl: string) => {
-    const segs = pokemonUrl.split("/");
-    return segs[segs.length - 2];
-  };
 
   if (isLoading) return (
     <Stack direction="column" width="100%" justifyContent="center" alignItems="center" height="100vh">
-      <LoadingLogo message={ 'Pokemons' } />
+      <LoadingLogo message={ 'Game Versions' } />
     </Stack>
   );
 
@@ -59,10 +50,10 @@ function PokemonInfinityScroll() {
           <Grid xs={ 10 } sm={ 6 }>
             <Stack direction="row" justifyContent="start" alignItems="center">
               <Box mr={ 3 }>
-                Infinite Scrolling Example
+                Thunks Example 
               </Box>
-              <Button onClick={ nextPageAddHandler } variant="outlined">
-                Manually Load 20 more
+              <Button onClick={ handleRefresh } variant="outlined">
+                Refresh
               </Button>
             </Stack>
           </Grid>
@@ -72,7 +63,7 @@ function PokemonInfinityScroll() {
                 { isFetching && <div>Loading more...</div>}
               </Box>
               <Box>
-                {data.results.length} / { totalCount }
+                Count
               </Box>
             </Stack>
           </Grid>
@@ -81,31 +72,10 @@ function PokemonInfinityScroll() {
       <Box mt={ 2 } mx={ isMobile ? 2 : 0 }>
         <LayoutWithGutter size={ 'skinny' }>
           
-          <InfiniteScroll
-            dataLength={ data.results.length }
-            next={ nextPageAddHandler }
-            hasMore={ !!nextPageUrl }
-            loader={ <LoadingSkeleton count={ 3 } sxProps={ {height: '4rem'} }/> }
-            endMessage={ <></> }
-            className="scroller-parent">
-            {
-              data.results.map((display: PokemonEntity) => {
-                return (
-                  <Grid key={ display.name } xs={ 12 }>
-                    {
-                      <Box sx={ {py: 2, ...flexCenter, width: '100%'} }>
-                        <Button component={ Link } to={ `./${extractId(display.url)}` } state={ {someData: 'some-cool-data' } }> { display.name } </Button>
-                      </Box>
-                    }
-                  </Grid>
-                );
-              })
-            }
-          </InfiniteScroll>
         </LayoutWithGutter>
       </Box>
     </Stack>
   );
 }
 
-export default PokemonInfinityScroll;
+export default GameVersions;
