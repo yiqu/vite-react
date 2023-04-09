@@ -3,12 +3,14 @@ import { setupListeners } from '@reduxjs/toolkit/query/react';
 import authSliceReducer from './auth/auth.reducer';
 import pokemonApiReducer from '../core/store/pokeapi/pokeapi.reducer';
 import { pokemonApi } from '../core/store/pokeapi/pokeapi';
+import gameVersionsReducer from '../core/store/game-versions/game-version.reducer';
 
 export const appStore = configureStore({
   reducer: {
     auth: authSliceReducer,
     pokemonApiConfig: pokemonApiReducer,
-    [pokemonApi.reducerPath]: pokemonApi.reducer
+    [pokemonApi.reducerPath]: pokemonApi.reducer,
+    gameVersions: gameVersionsReducer
   },
 
   // Adding the api middleware enables caching, invalidation, polling,
