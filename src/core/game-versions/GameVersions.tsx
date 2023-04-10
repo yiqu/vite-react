@@ -10,6 +10,8 @@ import LayoutWithGutter from "../../shared/components/layouts/LayoutWithGutter";
 import LoadingLogo from "../../shared/components/loading/full-logo/LoadingLogo";
 import ErrorPage from "../../404/ErrorPage";
 import { setFetchPageUrl } from "../store/pokeapi/pokeapi.reducer";
+import { useEffect } from "react";
+import { fetchGameVersions } from "../store/game-versions/game-version.thunks";
 
 
 function GameVersions() {
@@ -24,6 +26,10 @@ function GameVersions() {
   const handleRefresh = () => {
     dispatch(setFetchPageUrl(nextPageUrl));
   };
+
+  useEffect(() => {
+    dispatch(fetchGameVersions({page: 0}));
+  }, [dispatch]);
 
 
   if (isLoading) return (

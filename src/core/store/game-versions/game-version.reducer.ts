@@ -3,7 +3,10 @@ import {
   createEntityAdapter,
   EntityState,
 } from '@reduxjs/toolkit';
-import { PokemonEntity } from '../pokeapi/pokeapi.state';
+import { HttpResponse, PokemonEntity } from '../pokeapi/pokeapi.state';
+import { fetchGameVersions } from './game-version.thunks';
+import { FulfilledAction, PendingAction } from '../../../shared/models/redux.model';
+import { FetchInputParams } from './game-version.state';
 
 export interface GameVersionsEntityState extends EntityState<PokemonEntity> {
   apiLoading: boolean;
@@ -13,6 +16,7 @@ export interface GameVersionsEntityState extends EntityState<PokemonEntity> {
   errMsg?: string;
   offset: number;
   limit: 20;
+  page: number;
   total: number;
 }
 
@@ -21,7 +25,7 @@ export function selectIdentifer(config: PokemonEntity) {
 }
 
 export function comparator(a: PokemonEntity, b: PokemonEntity): number {
-  if (+a.name > +b.name) {
+  if (a.name < b.name) {
     return 1;
   }
   return -1;
@@ -29,14 +33,15 @@ export function comparator(a: PokemonEntity, b: PokemonEntity): number {
 
 export const adapter = createEntityAdapter<PokemonEntity>({
   selectId: selectIdentifer,
-  sortComparer: comparator
+ // sortComparer: comparator
 });
 
 export const gameVersionsSlice = createSlice({
   name: 'characters',
   initialState: adapter.getInitialState<Partial<GameVersionsEntityState>>({
     firstTimeLoading: true,
-    limit: 20
+    limit: 20,
+    page: 0
   }),
   reducers: {
     setLastFetchedDate: (state, action: PayloadAction<number>) => {
@@ -44,7 +49,19 @@ export const gameVersionsSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-
+    
+    builder.addCase(fetchGameVersions.pending, (state, action: PendingAction<FetchInputParams>) => {
+      state.apiLoading = true;
+      state.page = action.meta.arg.page;
+    });
+    builder.addCase(fetchGameVersions.fulfilled, (state, action: FulfilledAction<FetchInputParams, HttpResponse<PokemonEntity>>) => {
+      state.apiLoading = false;
+      state.total = action.payload.count;
+      adapter.setAll(state, action.payload.results);
+    });
+    builder.addCase(fetchGameVersions.rejected, (state, action) => {
+      
+    });
   },
 });
 

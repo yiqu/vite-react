@@ -28,6 +28,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <Toaster richColors  />
       </ThemeContextProvider>
     </Provider>
-    
   </React.StrictMode>
 );
