@@ -29,6 +29,7 @@ function GameVersions() {
   const isApiLoading: boolean = useAppSelector(fromGameVersionsSelectors.isApiLoading);
 
   const handleRefresh = () => {
+    dispatch(setPage(0));
   };
 
   useEffect(() => {
@@ -58,20 +59,20 @@ function GameVersions() {
     <Stack direction="column" width="100%">
       <AppToolbar toolbarProps={ {
         position: "sticky",
-        sx: {top: isMobile ? '56px':'64px'}
+        sx: {top: isMobile ? '56px':'64px', marginTop: isMobile ? 2 : ''}
       } }>
         <Grid container xs={ 12 }>
-          <Grid xs={ 10 } sm={ 6 }>
-            <Stack direction="row" justifyContent="start" alignItems="center">
+          <Grid xs={ 12 } sm={ 6 } mb={ isMobile ? 2 : undefined }>
+            <Stack direction="row" justifyContent={ isMobile ? 'end' : "start" } alignItems="center">
               <Box mr={ 3 }>
                 Thunks Example 
               </Box>
-              <Button onClick={ handleRefresh } variant="outlined">
+              <Button onClick={ handleRefresh } variant="outlined" disabled={ isApiLoading }>
                 Refresh
               </Button>
             </Stack>
           </Grid>
-          <Grid xs={ 2 } sm={ 6 } sx={ {display: 'flex', justifyContent: 'end', alignItems: 'center'} }>
+          <Grid xs={ 12 } sm={ 6 } sx={ {display: 'flex', justifyContent: 'end', alignItems: 'center'} }>
             <Stack direction="row" justifyContent="end" alignItems="center">
               <Box>
                 { isApiLoading && <div>Loading more...</div>}
@@ -99,8 +100,11 @@ function GameVersions() {
             })
           }
           <Stack spacing={ 2 } sx={ {py: 2, ...flexCenter, width: '100%'} }>
-            <Pagination count={ totalPages } page={ currentPage+1 } shape="rounded" showFirstButton showLastButton 
-              disabled={ isApiLoading } onChange={ handlePageChange } />
+            <Pagination count={ totalPages } page={ currentPage+1 } 
+              shape="rounded" showFirstButton showLastButton 
+              disabled={ isApiLoading } onChange={ handlePageChange }
+              siblingCount={ 1 } boundaryCount={ 1 }
+              size={ isMobile ? "small" : 'medium' } />
           </Stack>
         </LayoutWithGutter>
       </Box>

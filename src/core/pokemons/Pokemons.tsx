@@ -53,11 +53,11 @@ function PokemonInfinityScroll() {
     <Stack direction="column" width="100%">
       <AppToolbar toolbarProps={ {
         position: "sticky",
-        sx: {top: isMobile ? '56px':'64px'}
+        sx: {top: isMobile ? '56px':'64px', marginTop: isMobile ? 2 : ''}
       } }>
         <Grid container xs={ 12 }>
-          <Grid xs={ 10 } sm={ 6 }>
-            <Stack direction="row" justifyContent="start" alignItems="center">
+          <Grid xs={ 12 } sm={ 6 } mb={ isMobile ? 2 : undefined }>
+            <Stack direction="row" justifyContent={ isMobile ? 'end' : "start" } alignItems="center">
               <Box mr={ 3 }>
                 Infinite Scrolling Example
               </Box>
@@ -66,7 +66,7 @@ function PokemonInfinityScroll() {
               </Button>
             </Stack>
           </Grid>
-          <Grid xs={ 2 } sm={ 6 } sx={ {display: 'flex', justifyContent: 'end', alignItems: 'center'} }>
+          <Grid xs={ 12 } sm={ 6 } sx={ {display: 'flex', justifyContent: 'end', alignItems: 'center'} }>
             <Stack direction="row" justifyContent="end" alignItems="center">
               <Box>
                 { isFetching && <div>Loading more...</div>}
