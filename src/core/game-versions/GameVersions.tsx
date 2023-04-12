@@ -1,45 +1,53 @@
-import { skipToken } from "@reduxjs/toolkit/dist/query/react";
 import { useAppDispatch, useAppSelector } from "../../store/appHook";
-import { useFetchPokemonsQuery } from "../store/pokeapi/pokeapi";
-import { getCountInformation, getPokemonApiFetchUrl, getPokemonApiNextUrl } from "../store/pokeapi/pokeapi.selectors";
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, Pagination, Stack } from "@mui/material";
 import AppToolbar from "../../shared/components/toolbar/Toolbar";
 import useScreenSize from "../../shared/hooks/useIsMobile";
 import Grid from '@mui/material/Unstable_Grid2';
 import LayoutWithGutter from "../../shared/components/layouts/LayoutWithGutter";
 import LoadingLogo from "../../shared/components/loading/full-logo/LoadingLogo";
 import ErrorPage from "../../404/ErrorPage";
-import { setFetchPageUrl } from "../store/pokeapi/pokeapi.reducer";
 import { useEffect } from "react";
 import { fetchGameVersions } from "../store/game-versions/game-version.thunks";
-
+import * as fromGameVersionsSelectors from '../store/game-versions/game-version.selectors';
+import { PokemonEntity } from "../store/pokeapi/pokeapi.state";
+import { flexCenter } from "../../shared/utils/css.utils";
+import { Link } from "react-router-dom";
+import { setPage } from "../store/game-versions/game-version.reducer";
 
 function GameVersions() {
 
   const { isMobile } = useScreenSize();
   const dispatch = useAppDispatch();
-  const fetchPageURl: string | null = useAppSelector(getPokemonApiFetchUrl);
-  const nextPageUrl: string | null = useAppSelector(getPokemonApiNextUrl);
-  const totalCount: number | undefined = useAppSelector(getCountInformation);
-  const { data, isFetching, isLoading, error, isError } = useFetchPokemonsQuery(fetchPageURl ?? skipToken);
+  const currentPage: number = useAppSelector(fromGameVersionsSelectors.getPage);
+  const totalPages: number = useAppSelector(fromGameVersionsSelectors.getTotalPages);
+  const displayCount: string = useAppSelector(fromGameVersionsSelectors.displayCount);
+
+  const totalCount: number = useAppSelector(fromGameVersionsSelectors.getTotal);
+  const data: PokemonEntity[] = useAppSelector(fromGameVersionsSelectors.selectAll);
+  const isFirstTimeLoading: boolean = useAppSelector(fromGameVersionsSelectors.isFirstTimeLoading);
+  const isErrored: string | undefined = useAppSelector(fromGameVersionsSelectors.isErrored);
+  const isApiLoading: boolean = useAppSelector(fromGameVersionsSelectors.isApiLoading);
 
   const handleRefresh = () => {
-    dispatch(setFetchPageUrl(nextPageUrl));
   };
 
   useEffect(() => {
-    dispatch(fetchGameVersions({page: 0}));
-  }, [dispatch]);
+    dispatch(fetchGameVersions({page: currentPage}));
+  }, [dispatch, currentPage]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    dispatch(setPage(page - 1));
+  };
 
 
-  if (isLoading) return (
+  if (isFirstTimeLoading) return (
     <Stack direction="column" width="100%" justifyContent="center" alignItems="center" height="100vh">
       <LoadingLogo message={ 'Game Versions' } />
     </Stack>
   );
 
-  if (isError) {
-    return <ErrorPage reason={ (error as any).status } debug={ (error as any).error } />;
+  if (isErrored) {
+    return <ErrorPage reason={ (isErrored as any) } debug={ (isErrored as any) } />;
   }
 
   if (!data) {
@@ -66,10 +74,10 @@ function GameVersions() {
           <Grid xs={ 2 } sm={ 6 } sx={ {display: 'flex', justifyContent: 'end', alignItems: 'center'} }>
             <Stack direction="row" justifyContent="end" alignItems="center">
               <Box>
-                { isFetching && <div>Loading more...</div>}
+                { isApiLoading && <div>Loading more...</div>}
               </Box>
               <Box>
-                Count
+                { displayCount } of { totalCount }
               </Box>
             </Stack>
           </Grid>
@@ -77,7 +85,23 @@ function GameVersions() {
       </AppToolbar>
       <Box mt={ 2 } mx={ isMobile ? 2 : 0 }>
         <LayoutWithGutter size={ 'skinny' }>
-          
+          {
+            data.map((display: PokemonEntity) => {
+              return (
+                <Grid key={ display.name } xs={ 12 }>
+                  {
+                    <Box sx={ {py: 2, ...flexCenter, width: '100%'} }>
+                      <Button fullWidth component={ Link } to={ `./${extractId(display.url)}` } state={ {someData: 'some-cool-data' } } > { display.name } </Button>
+                    </Box>
+                  }
+                </Grid>
+              );
+            })
+          }
+          <Stack spacing={ 2 } sx={ {py: 2, ...flexCenter, width: '100%'} }>
+            <Pagination count={ totalPages } page={ currentPage+1 } shape="rounded" showFirstButton showLastButton 
+              disabled={ isApiLoading } onChange={ handlePageChange } />
+          </Stack>
         </LayoutWithGutter>
       </Box>
     </Stack>
@@ -85,3 +109,8 @@ function GameVersions() {
 }
 
 export default GameVersions;
+
+const extractId = (pokemonUrl: string) => {
+  const segs = pokemonUrl.split("/");
+  return segs[segs.length - 2];
+};

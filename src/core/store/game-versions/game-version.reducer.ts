@@ -12,10 +12,7 @@ export interface GameVersionsEntityState extends EntityState<PokemonEntity> {
   apiLoading: boolean;
   firstTimeLoading?: boolean;
   lastFetchedDate: number;
-  error: boolean;
   errMsg?: string;
-  offset: number;
-  limit: 20;
   page: number;
   total: number;
 }
@@ -37,33 +34,38 @@ export const adapter = createEntityAdapter<PokemonEntity>({
 });
 
 export const gameVersionsSlice = createSlice({
-  name: 'characters',
+  name: 'gameVersions',
   initialState: adapter.getInitialState<Partial<GameVersionsEntityState>>({
     firstTimeLoading: true,
-    limit: 20,
     page: 0
   }),
   reducers: {
     setLastFetchedDate: (state, action: PayloadAction<number>) => {
       state.lastFetchedDate = action.payload;
+    },
+    setPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload;
     }
   },
   extraReducers: (builder) => {
     
     builder.addCase(fetchGameVersions.pending, (state, action: PendingAction<FetchInputParams>) => {
       state.apiLoading = true;
-      state.page = action.meta.arg.page;
+      //state.page = action.meta.arg.page;
     });
     builder.addCase(fetchGameVersions.fulfilled, (state, action: FulfilledAction<FetchInputParams, HttpResponse<PokemonEntity>>) => {
       state.apiLoading = false;
       state.total = action.payload.count;
+      state.errMsg = undefined;
+      state.firstTimeLoading = false;
       adapter.setAll(state, action.payload.results);
     });
     builder.addCase(fetchGameVersions.rejected, (state, action) => {
-      
+      state.apiLoading = false;
+      state.errMsg = action.error.message;
     });
   },
 });
 
-export const { setLastFetchedDate } = gameVersionsSlice.actions;
+export const { setLastFetchedDate, setPage } = gameVersionsSlice.actions;
 export default gameVersionsSlice.reducer;

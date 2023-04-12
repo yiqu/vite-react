@@ -94,7 +94,7 @@ function PokemonInfinityScroll() {
                   <Grid key={ display.name } xs={ 12 }>
                     {
                       <Box sx={ {py: 2, ...flexCenter, width: '100%'} }>
-                        <Button component={ Link } to={ `./${extractId(display.url)}` } state={ {someData: 'some-cool-data' } }> { display.name } </Button>
+                        <Button fullWidth component={ Link } to={ `./${extractId(display.url)}` } state={ {someData: 'some-cool-data' } }> { display.name } </Button>
                       </Box>
                     }
                   </Grid>
