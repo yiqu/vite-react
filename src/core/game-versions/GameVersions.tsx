@@ -4,7 +4,6 @@ import AppToolbar from "../../shared/components/toolbar/Toolbar";
 import useScreenSize from "../../shared/hooks/useIsMobile";
 import Grid from '@mui/material/Unstable_Grid2';
 import LayoutWithGutter from "../../shared/components/layouts/LayoutWithGutter";
-import LoadingLogo from "../../shared/components/loading/full-logo/LoadingLogo";
 import ErrorPage from "../../404/ErrorPage";
 import { useEffect } from "react";
 import { fetchGameVersions } from "../store/game-versions/game-version.thunks";
@@ -13,6 +12,7 @@ import { PokemonEntity } from "../store/pokeapi/pokeapi.state";
 import { flexCenter } from "../../shared/utils/css.utils";
 import { Link } from "react-router-dom";
 import { setPage } from "../store/game-versions/game-version.reducer";
+import SplashLoadingScreen from "../../shared/components/loading/splash/SplashLoading";
 
 function GameVersions() {
 
@@ -42,9 +42,7 @@ function GameVersions() {
 
 
   if (isFirstTimeLoading) return (
-    <Stack direction="column" width="100%" justifyContent="center" alignItems="center" height="100vh">
-      <LoadingLogo message={ 'Game Versions' } />
-    </Stack>
+    <SplashLoadingScreen />
   );
 
   if (isErrored) {

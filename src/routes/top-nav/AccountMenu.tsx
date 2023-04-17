@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../store/appHook';
 import { getUser } from '../../store/auth/auth.selectors';
 import startCase from 'lodash/startCase';
 
-function Account() {
+function AccountMenu() {
 
   const dispatch = useAppDispatch();
   const user: string = useAppSelector(getUser);
@@ -91,4 +91,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default AccountMenu;

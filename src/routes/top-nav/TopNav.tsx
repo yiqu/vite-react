@@ -14,7 +14,7 @@ import { useLocalStorage } from 'react-use';
 import { startCase } from 'lodash';
 import ThemeContext from "../../theme/ThemeContext";
 import { LS_APP_THEME, TransformPageTitle } from "../../shared/utils/constants";
-import Account from "./Account";
+import AccountMenu from "./AccountMenu";
 
 
 export interface TopNavProps {
@@ -80,7 +80,8 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
                 </IconButton>
               </Tooltip>
               
-              <Account />
+              <AccountMenu />
+
             </Stack>
           </Stack>
         </Toolbar>

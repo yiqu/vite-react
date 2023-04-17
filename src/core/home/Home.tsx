@@ -1,11 +1,15 @@
-import { Box, Divider, List, ListItem, ListItemButton, ListItemText, Stack, Typography } from "@mui/material";
+import { Box, Button, Divider, List, ListItem, ListItemButton, ListItemText, Stack, Typography } from "@mui/material";
 import LayoutWithGutter from "../../shared/components/layouts/LayoutWithGutter";
 import useScreenSize from "../../shared/hooks/useIsMobile";
 import { useAppDispatch } from "../../store/appHook";
 import { flexCenter } from "../../shared/utils/css.utils";
 import styles from './Home.module.scss';
 import { Link } from "react-router-dom";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import DonutSmallIcon from '@mui/icons-material/DonutSmall';
 
+const GITHUB_REPO_URL =  import.meta.env.VITE_GITHUB_REPO_URL;
+const CIRCLE_CI_URL = import.meta.env.VITE_CIRCLE_CI_URL;
 
 function Home() {
 
@@ -50,6 +54,15 @@ function Home() {
                   </ListItemButton>
                 </ListItem>
               </List>
+            </Stack>
+            <Divider sx={ {width: '100%'} }> Links </Divider>
+            <Stack direction="row">
+              <Button startIcon={ <GitHubIcon /> } href={ GITHUB_REPO_URL } target="_blank"  >
+                Github
+              </Button>
+              <Button startIcon={ <DonutSmallIcon /> } href={ CIRCLE_CI_URL } target="_blank" >
+                Circle CI
+              </Button>
             </Stack>
           </div>
         </LayoutWithGutter>

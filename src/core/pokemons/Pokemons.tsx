@@ -7,7 +7,6 @@ import AppToolbar from "../../shared/components/toolbar/Toolbar";
 import useScreenSize from "../../shared/hooks/useIsMobile";
 import Grid from '@mui/material/Unstable_Grid2';
 import LayoutWithGutter from "../../shared/components/layouts/LayoutWithGutter";
-import LoadingLogo from "../../shared/components/loading/full-logo/LoadingLogo";
 import ErrorPage from "../../404/ErrorPage";
 import { PokemonEntity } from "../store/pokeapi/pokeapi.state";
 import { flexCenter } from "../../shared/utils/css.utils";
@@ -15,6 +14,7 @@ import { setFetchPageUrl } from "../store/pokeapi/pokeapi.reducer";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import LoadingSkeleton from "../../shared/components/loading/LoadingSkeleton";
 import { Link } from "react-router-dom";
+import SplashLoadingScreen from "../../shared/components/loading/splash/SplashLoading";
 
 
 function PokemonInfinityScroll() {
@@ -36,9 +36,7 @@ function PokemonInfinityScroll() {
   };
 
   if (isLoading) return (
-    <Stack direction="column" width="100%" justifyContent="center" alignItems="center" height="100vh">
-      <LoadingLogo message={ 'Pokemons' } />
-    </Stack>
+    <SplashLoadingScreen />
   );
 
   if (isError) {
