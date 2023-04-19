@@ -59,8 +59,7 @@ jobs:
       - run: echo "Building for Firebase"
       - run: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            npm install -g --silent typescript
-            npm run build
+            npm run build-notsc
           else
             npm -v
           fi

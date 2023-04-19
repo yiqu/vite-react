@@ -61,6 +61,7 @@
     "start": "vite",
     "build-gh": "tsc && vite build --base=/vite-react/",
     "build": "tsc && vite build",
+    "build-notsc": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build --base=/vite-react/",
     "deploy": "gh-pages -d build",
