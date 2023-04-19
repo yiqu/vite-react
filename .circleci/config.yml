@@ -54,10 +54,10 @@ jobs:
       - image: node:19.8
     steps:
       - run:
-        name: Install firebase
-        command: |
-          npm install -g --silent firebase-tools
-          npm install -g --silent firebase
+          name: Install firebase
+          command: |
+            npm install -g --silent firebase-tools
+            npm install -g --silent firebase
       - run:
           name: Deploy Main to Firebase
           command: firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
