@@ -60,7 +60,11 @@ jobs:
             npm install -g --silent firebase
       - run:
           name: Deploy Main to Firebase
-          command: firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+          command: |
+            ls -la
+            cd ../
+            ls -la
+            firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
 workflows:
   version: 2
