@@ -53,6 +53,9 @@ jobs:
     docker:
       - image: node:19.8
     steps:
+      - checkout
+      - attach_workspace:
+          at: ~/myapp
       - run:
           name: Install firebase
           command: |
@@ -61,7 +64,6 @@ jobs:
       - run:
           name: Deploy Main to Firebase
           command: |
-            cd ../
             ls -la
             firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
