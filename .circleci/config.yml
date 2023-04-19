@@ -104,9 +104,10 @@ workflows:
             branches:
               only:
                 - master
+      - buildfb
       - deployfb:
           requires:
-            - build
+            - buildfb
           filters:
             branches:
               only: master
