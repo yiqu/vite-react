@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "vitereact",
+    "site": "viteact",
     "public": "build",
     "ignore": [
       "firebase.json",
