@@ -56,6 +56,13 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/myapp
+      - run: echo "Building for Firebase"
+      - run: |
+        if [ "${CIRCLE_BRANCH}" == "master" ]; then
+          npm run build
+        else
+          npm -v
+        fi
       - run:
           name: Install firebase
           command: |
