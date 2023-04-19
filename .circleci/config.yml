@@ -48,6 +48,31 @@ jobs:
       - run:
           name: Deploy to gh-pages branch
           command: gh-pages --message "[ci skip]" -d build/
+  buildfb:
+    working_directory: ~/myapp
+    docker:
+      - image: cimg/node:19.8-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: myapp-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run: npm install
+      - save_cache:
+          key: myapp-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+      - run: echo "Building for Firebase"
+      - run: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            npm run build
+          else
+            npm -v
+          fi
+      - persist_to_workspace:
+          root: ~/myapp
+          paths:
+            - build/*
   deployfb:
     working_directory: ~/myapp
     docker:
@@ -56,14 +81,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/myapp
-      - run: echo "Building for Firebase"
-      - run: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            npm install -g --silent vite
-            npm run build-notsc
-          else
-            npm -v
-          fi
       - run:
           name: Install firebase
           command: |
