@@ -48,6 +48,14 @@ jobs:
       - run:
           name: Deploy to gh-pages branch
           command: gh-pages --message "[ci skip]" -d build/
+  deployfb:
+    working_directory: ~/myapp
+    docker:
+      - image: node:19.8
+    steps:
+      - run:
+        name: Deploy Main to Firebase
+        command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
 workflows:
   version: 2
@@ -61,3 +69,10 @@ workflows:
             branches:
               only:
                 - master
+      - deployfb:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
+  
