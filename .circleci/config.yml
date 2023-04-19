@@ -62,7 +62,7 @@ jobs:
           name: Deploy Main to Firebase
           command: |
             ls -la
-            cd ../
+            cd ../myapp
             ls -la
             firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
